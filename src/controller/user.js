@@ -7,7 +7,7 @@ async function getUserController(ctx, next) {
 
 async function createUserController(ctx, next) {
   let res = await createUserService(ctx);
-  ctx.body = res
+  ctx.body = res;
 }
 
 module.exports = {

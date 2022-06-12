@@ -1,5 +1,6 @@
 const { getUserByNameService } = require("../service/user");
 const { ERROR_USERNAME_OR_PASSWORD_IS_NULL, ERROR_USER_IS_EXSIT } = process.env;
+const { encrypt } = require("../utils/encrypt");
 
 async function createUserVerify(ctx, next) {
   const { username, password } = ctx.request.body;
@@ -14,19 +15,12 @@ async function createUserVerify(ctx, next) {
     return ctx.app.emit("error", ERROR_USER_IS_EXSIT, ctx);
   }
 
-  await next();
-}
+  //加密
+  ctx.request.body.password = encrypt(password);
 
-const crypto = require("crypto");
-// 加密
-async function handlePassword(ctx, next) {
-  let { password } = await ctx.request.body;
-  const md5 = crypto.createHash("md5");
-  ctx.request.body.password = md5.update(password).digest("hex");
   await next();
 }
 
 module.exports = {
   createUserVerify,
-  handlePassword,
 };
