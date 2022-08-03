@@ -4,7 +4,8 @@ const {
   blogController,
   bannerController,
   tagController,
-  blogsDetailController,
+  blogDetailController,
+  blogUpdateController,
 } = require("../controller/blog");
 
 const blogRouter = new router({ prefix: "/api/blog" });
@@ -15,6 +16,8 @@ blogRouter.get("/banner", bannerController);
 
 blogRouter.get("/tag", tagController);
 
-blogRouter.get("/detail", blogsDetailController);
+blogRouter.get("/detail", blogDetailController);
+
+blogRouter.post("/update", blogUpdateController);
 
 module.exports = blogRouter;

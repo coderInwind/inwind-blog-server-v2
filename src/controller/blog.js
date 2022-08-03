@@ -3,6 +3,7 @@ const {
   bannerService,
   tagService,
   blogDetailService,
+  blogUpdateService,
 } = require("../service/blog");
 
 async function blogController(ctx, next) {
@@ -20,14 +21,23 @@ async function tagController(ctx, next) {
   ctx.body = res;
 }
 
-async function blogsDetailController(ctx,next){
-  const res = await blogDetailService(ctx)
-  ctx.body = res
+async function blogDetailController(ctx, next) {
+  const res = await blogDetailService(ctx);
+  ctx.body = { data: res };
+}
+
+async function blogUpdateController(ctx, next) {
+  const res = await blogUpdateService(ctx);
+
+  if (res[0].affectedRows === 1) {
+    ctx.body = { data: "修改成功" };
+  }
 }
 
 module.exports = {
   blogController,
   bannerController,
   tagController,
-  blogsDetailController
+  blogDetailController,
+  blogUpdateController,
 };

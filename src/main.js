@@ -17,12 +17,14 @@ const { errorHandle } = require("./utils/errorHandle");
 const userRouter = require("./router/user");
 const authRouter = require("./router/auth");
 const blogRouter = require("./router/blog");
+const assetsRouter = require("./router/assets");
 
 app.use(bodyParser());
 
 app.use(userRouter.routes(), userRouter.allowedMethods());
 app.use(authRouter.routes(), authRouter.allowedMethods());
 app.use(blogRouter.routes(), blogRouter.allowedMethods());
+app.use(assetsRouter.routes(), assetsRouter.allowedMethods());
 
 app.on("error", errorHandle);
 app.listen(process.env.APP_PORT, () => {

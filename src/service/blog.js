@@ -37,7 +37,15 @@ async function blogDetailService(ctx) {
   if (!id) {
     return [{}];
   }
-  const [res] = await db.execute("SELECT * FROM blog WHERE id=?", [id]);
+  const res = await db.execute("SELECT * FROM blog WHERE id=?", [id]);
+  return res[0][0];
+}
+
+async function blogUpdateService(ctx) {
+  const { id, title, content, src, tag, overview } = ctx.request.body;
+  const res = db.execute(
+    `UPDATE blog b set b.title = "${title}",b.content = "${content}",b.src = "${src}",b.tag = "${tag}",b.overview = "${overview}" WHERE id = ${id}`
+  );
   return res;
 }
 
@@ -46,4 +54,5 @@ module.exports = {
   bannerService,
   tagService,
   blogDetailService,
+  blogUpdateService,
 };
